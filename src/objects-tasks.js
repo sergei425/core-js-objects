@@ -68,7 +68,7 @@ function removeProperties(obj, keys) {
  *    compareObjects({a: 1, b: 2}, {a: 1, b: 3}) => false
  */
 function compareObjects(obj1, obj2) {
-  Object.keys(obj1).every((key) => obj1[key] !== obj2[key]);
+  return Object.keys(obj1).every((key) => obj1[key] === obj2[key]);
 }
 
 /**
@@ -83,10 +83,7 @@ function compareObjects(obj1, obj2) {
  *    isEmptyObject({a: 1}) => false
  */
 function isEmptyObject(obj) {
-  if (Object.keys(obj).length) {
-    return false;
-  }
-  return true;
+  return Object.keys(obj).length === 0;
 }
 
 /**
@@ -154,8 +151,15 @@ function sellTickets(/* queue */) {
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
-function Rectangle(/* width, height */) {
-  throw new Error('Not implemented');
+function Rectangle(width, height) {
+  const rect = {
+    width,
+    height,
+    getArea() {
+      return this.width * this.height;
+    },
+  };
+  return rect;
 }
 
 /**
@@ -218,8 +222,13 @@ function fromJSON(/* proto, json */) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  return arr.toSorted((a, b) => {
+    if (a.country === b.country) {
+      return a.city.localeCompare(b.city);
+    }
+    return a.country.localeCompare(b.country);
+  });
 }
 
 /**
